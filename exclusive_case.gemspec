@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.email = ["aj@ajsharma.com"]
 
   spec.summary = "Exhaustive case statements for Ruby to prevent unhandled cases"
-  spec.description = "A Ruby gem that provides exhaustive case statement functionality to prevent bugs from unhandled cases when new values are added to a system."
+  spec.description =  "A Ruby gem that provides exhaustive case statement functionality to prevent bugs " \
+                      "from unhandled cases when new values are added to a system."
   spec.homepage = "https://github.com/yourusername/exclusive_case"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
@@ -29,11 +30,4 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-
-  # Development dependencies
-  spec.add_development_dependency "rake", "~> 13.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 1.21"
-  spec.add_development_dependency "rubocop-rspec", "~> 2.0"
-  spec.add_development_dependency "simplecov", "~> 0.21"
 end
