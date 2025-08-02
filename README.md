@@ -91,3 +91,55 @@ exhaustive_case letter do
   on('B', 'C') { // handle B or C }
 end
 ```
+
+## Enhanced validation with `of:` parameter
+
+In situations where the central system relies on a series of strategies or an enumerated list, it's often unclear where a growing codebase new logic should be added.
+
+By declaring explicitly the known list of forks, the list of forks can be centralized and then the test suite can provide feedback when a new entry to the list is added or removed.
+
+For even stronger guarantees, you can specify the complete list of acceptable inputs using the `of:` parameter. This ensures that:
+
+1. All declared cases must belong to the specified list
+2. All values in the `of:` list must be handled by at least one case
+
+```ruby
+# Define all possible values upfront
+VALID_LETTERS = ['A', 'B', 'C'].freeze
+
+exhaustive_case letter, of: VALID_LETTERS do 
+  on('A') { // handle A }
+  on('B') { // handle B }
+  on('C') { // handle C }
+end
+```
+
+This will raise an `InvalidCaseError` if:
+- You try to handle a case not in the `of:` list: `on('D') { ... }` 
+- You forget to handle all cases: missing `on('C') { ... }`
+
+The `of:` parameter is optional - without it, `exhaustive_case` works as before, only validating that the input value has a matching case.
+
+### Examples with `of:`
+
+```ruby
+# Status handling with validation
+STATUSES = [:pending, :success, :failure].freeze
+
+result = exhaustive_case status, of: STATUSES do
+  on(:pending) { "Processing..." }
+  on(:success) { "Completed successfully" }
+  on(:failure) { "Failed with error" }
+end
+
+# Multiple values per case still work
+USER_TYPES = [:admin, :moderator, :user, :guest].freeze
+
+permissions = exhaustive_case user_type, of: USER_TYPES do
+  on(:admin) { [:read, :write, :delete, :manage] }
+  on(:moderator, :user) { [:read, :write] }
+  on(:guest) { [:read] }
+end
+```
+
+if a new status is added to `STATUSES` a test suite should reveal that a case is missing.
