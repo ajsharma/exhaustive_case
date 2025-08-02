@@ -25,3 +25,7 @@ Metrics/BlockLength:
 
 Style/FrozenStringLiteralComment:
   Enabled: true
+
+# Disable RSpec/ExampleLength - allow longer test examples for clarity
+RSpec/ExampleLength:
+  Enabled: false

@@ -6,10 +6,10 @@ source "https://rubygems.org"
 gemspec
 
 group :test, :development do
-  gem "rake", "~> 13.0"
-  gem "rspec", "~> 3.0"
-  gem "rubocop", "~> 1.21"
-  gem "rubocop-rspec", "~> 2.0"
-  gem "simplecov", "~> 0.21"
+  gem "rake"
+  gem "rspec"
+  gem "rubocop"
+  gem "rubocop-rspec"
+  gem "simplecov"
   gem "yard"
 end
