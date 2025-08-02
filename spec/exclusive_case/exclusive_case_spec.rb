@@ -64,7 +64,7 @@ RSpec.describe ExclusiveCase do
         expect do
           exhaustive_case("A", of: %w[A B C]) do
             on("A") { "handled A" }
-            on("D") { "handled D" }  # D is not in the 'of' list
+            on("D") { "handled D" } # D is not in the 'of' list
           end
         end.to raise_error(ExclusiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
       end
@@ -89,7 +89,7 @@ RSpec.describe ExclusiveCase do
       end
 
       it "works with different data types in 'of' list" do
-        result = exhaustive_case(:success, of: [:success, :failure, :pending]) do
+        result = exhaustive_case(:success, of: %i[success failure pending]) do
           on(:success) { "Operation succeeded" }
           on(:failure) { "Operation failed" }
           on(:pending) { "Operation pending" }
@@ -102,7 +102,7 @@ RSpec.describe ExclusiveCase do
         expect do
           exhaustive_case("A", of: %w[A B C]) do
             on("A") { "handled A" }
-            on("D", "E") { "handled D or E" }  # Both D and E are not in the 'of' list
+            on("D", "E") { "handled D or E" } # Both D and E are not in the 'of' list
           end
         end.to raise_error(ExclusiveCase::InvalidCaseError, /Invalid case\(s\): "D", "E"/)
       end

@@ -16,7 +16,7 @@ module ExclusiveCase
 
     def execute
       validate_completeness if @of
-      
+
       @cases.each do |case_def|
         if case_def[:matchers].any? { |matcher| matcher == @value }
           @matched = true
@@ -33,8 +33,8 @@ module ExclusiveCase
       invalid_matchers = matchers.reject { |matcher| @of.include?(matcher) }
       return if invalid_matchers.empty?
 
-      raise InvalidCaseError, "Invalid case(s): #{invalid_matchers.map(&:inspect).join(', ')}. " \
-                              "Must be one of: #{@of.map(&:inspect).join(', ')}"
+      raise InvalidCaseError, "Invalid case(s): #{invalid_matchers.map(&:inspect).join(", ")}. " \
+                              "Must be one of: #{@of.map(&:inspect).join(", ")}"
     end
 
     def validate_completeness
@@ -42,8 +42,8 @@ module ExclusiveCase
       missing_cases = @of - declared_cases
       return if missing_cases.empty?
 
-      raise MissingCaseError, "Missing case(s): #{missing_cases.map(&:inspect).join(', ')}. " \
-                              "All values from 'of' must be handled: #{@of.map(&:inspect).join(', ')}"
+      raise MissingCaseError, "Missing case(s): #{missing_cases.map(&:inspect).join(", ")}. " \
+                              "All values from 'of' must be handled: #{@of.map(&:inspect).join(", ")}"
     end
   end
 end

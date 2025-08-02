@@ -15,7 +15,7 @@ module ExclusiveCase
   # Indicates that a case was declared that is not in the allowed 'of' list
   class InvalidCaseError < Error; end
 
-  # Indicates that one or more cases from the initial value list was not 
+  # Indicates that one or more cases from the initial value list was not
   # implemented
   class MissingCaseError < Error; end
 
