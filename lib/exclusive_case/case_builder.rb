@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module ExclusiveCase
+  # CaseBuilder handles the construction and execution of exhaustive case statements.
+  # It validates cases against an optional 'of' list and ensures all required cases are handled.
+  #
+  # @api private
   class CaseBuilder
     def initialize(value, of)
       @value = value

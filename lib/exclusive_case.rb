@@ -3,6 +3,22 @@
 require_relative "exclusive_case/version"
 require_relative "exclusive_case/case_builder"
 
+# ExclusiveCase provides exhaustive case statement functionality to prevent bugs
+# from unhandled cases when new values are added to a system.
+#
+# @example Basic usage
+#   exhaustive_case letter do
+#     on('A') { "handle A" }
+#     on('B') { "handle B" }
+#     on('C') { "handle C" }
+#   end
+#
+# @example With validation using 'of' parameter
+#   exhaustive_case letter, of: ['A', 'B', 'C'] do
+#     on('A') { "handle A" }
+#     on('B') { "handle B" }
+#     on('C') { "handle C" }
+#   end
 module ExclusiveCase
   # Generic Error class for the gem
   class Error < StandardError; end
