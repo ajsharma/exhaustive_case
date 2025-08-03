@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "set"
+
 module ExhaustiveCase
   # CaseBuilder handles the construction and execution of exhaustive case statements.
   # It validates cases against an optional 'of' list and ensures all required cases are handled.
@@ -11,15 +13,20 @@ module ExhaustiveCase
       @of = of
       @cases = []
       @matched = false
+      @declared_matchers = Set.new
     end
 
     def on(*matchers, &block)
-      validate_matchers(matchers) if @of
+      ensure_only_of_matchers(matchers) if @of
+      ensure_unique_matchers(matchers)
       @cases << { matchers: matchers, block: block }
     end
 
     def execute
-      validate_completeness if @of
+      # Important! Make sure this is run before executing a matcher, we need to validate
+      # that the case structure is complete so we don't execute branches for an invalid
+      # exhaustive case
+      ensure_completeness if @of
 
       @cases.each do |case_def|
         if case_def[:matchers].any? { |matcher| matcher == @value }
@@ -33,7 +40,7 @@ module ExhaustiveCase
 
     private
 
-    def validate_matchers(matchers)
+    def ensure_only_of_matchers(matchers)
       invalid_matchers = matchers.reject { |matcher| @of.include?(matcher) }
       return if invalid_matchers.empty?
 
@@ -41,7 +48,18 @@ module ExhaustiveCase
                               "Must be one of: #{@of.map(&:inspect).join(", ")}"
     end
 
-    def validate_completeness
+    def ensure_unique_matchers(matchers)
+      duplicate_matchers = matchers.select { |matcher| @declared_matchers.include?(matcher) }
+
+      unless duplicate_matchers.empty?
+        raise DuplicateCaseError, "Duplicate case(s): #{duplicate_matchers.map(&:inspect).join(", ")}. " \
+                                  "Each case value can only be declared once."
+      end
+
+      @declared_matchers.merge(matchers)
+    end
+
+    def ensure_completeness
       declared_cases = @cases.flat_map { |case_def| case_def[:matchers] }.uniq
       missing_cases = @of - declared_cases
       return if missing_cases.empty?
