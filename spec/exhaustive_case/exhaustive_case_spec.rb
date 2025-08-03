@@ -94,82 +94,80 @@ RSpec.describe ExhaustiveCase do
       end.to raise_error(ExhaustiveCase::DuplicateCaseError, /Duplicate case\(s\): :active/)
     end
 
-    context "with 'of' parameter" do
-      it "raises InvalidCaseError before DuplicateCaseError when both conditions occur" do
-        expect do
-          exhaustive_case("A", of: %w[A B C]) do
-            on("A") { "first A" }
-            on("A", "D") { "second A with invalid D" }
-          end
-        end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
-      end
-
-      it "prevents duplicate cases while ensuring completeness" do
-        expect do
-          exhaustive_case("A", of: %w[A B C]) do
-            on("A") { "handled A" }
-            on("B") { "handled B" }
-            on("B") { "duplicate B" }
-          end
-        end.to raise_error(ExhaustiveCase::DuplicateCaseError, /Duplicate case\(s\): "B"/)
-      end
-    end
-
-    it "validates that all cases belong to the 'of' list" do
-      result = exhaustive_case("A", of: %w[A B C]) do
-        on("A") { "handled A" }
-        on("B") { "handled B" }
-        on("C") { "handled C" }
-      end
-
-      expect(result).to eq("handled A")
-    end
-
-    it "raises InvalidCaseError when a case is not in the 'of' list" do
+    it "raises InvalidCaseError before DuplicateCaseError when both conditions occur" do
       expect do
         exhaustive_case("A", of: %w[A B C]) do
-          on("A") { "handled A" }
-          on("D") { "handled D" } # D is not in the 'of' list
+          on("A") { "first A" }
+          on("A", "D") { "second A with invalid D" }
         end
       end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
     end
 
-    it "raises MissingCaseError when not all 'of' values are handled" do
+    it "prevents duplicate cases while ensuring completeness" do
       expect do
         exhaustive_case("A", of: %w[A B C]) do
           on("A") { "handled A" }
           on("B") { "handled B" }
-          # Missing case for "C"
+          on("B") { "duplicate B" }
         end
-      end.to raise_error(ExhaustiveCase::MissingCaseError, /Missing case\(s\): "C"/)
+      end.to raise_error(ExhaustiveCase::DuplicateCaseError, /Duplicate case\(s\): "B"/)
+    end
+  end
+
+  it "validates that all cases belong to the 'of' list" do
+    result = exhaustive_case("A", of: %w[A B C]) do
+      on("A") { "handled A" }
+      on("B") { "handled B" }
+      on("C") { "handled C" }
     end
 
-    it "allows multiple values in a single 'on' clause when using 'of'" do
-      result = exhaustive_case("B", of: %w[A B C]) do
+    expect(result).to eq("handled A")
+  end
+
+  it "raises InvalidCaseError when a case is not in the 'of' list" do
+    expect do
+      exhaustive_case("A", of: %w[A B C]) do
         on("A") { "handled A" }
-        on("B", "C") { "handled B or C" }
+        on("D") { "handled D" } # D is not in the 'of' list
       end
+    end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
+  end
 
-      expect(result).to eq("handled B or C")
-    end
-
-    it "works with different data types in 'of' list" do
-      result = exhaustive_case(:success, of: %i[success failure pending]) do
-        on(:success) { "Operation succeeded" }
-        on(:failure) { "Operation failed" }
-        on(:pending) { "Operation pending" }
+  it "raises MissingCaseError when not all 'of' values are handled" do
+    expect do
+      exhaustive_case("A", of: %w[A B C]) do
+        on("A") { "handled A" }
+        on("B") { "handled B" }
+        # Missing case for "C"
       end
+    end.to raise_error(ExhaustiveCase::MissingCaseError, /Missing case\(s\): "C"/)
+  end
 
-      expect(result).to eq("Operation succeeded")
+  it "allows multiple values in a single 'on' clause when using 'of'" do
+    result = exhaustive_case("B", of: %w[A B C]) do
+      on("A") { "handled A" }
+      on("B", "C") { "handled B or C" }
     end
 
-    it "raises error for multiple invalid cases" do
-      expect do
-        exhaustive_case("A", of: %w[A B C]) do
-          on("A") { "handled A" }
-          on("D", "E") { "handled D or E" } # Both D and E are not in the 'of' list
-        end
-      end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D", "E"/)
+    expect(result).to eq("handled B or C")
+  end
+
+  it "works with different data types in 'of' list" do
+    result = exhaustive_case(:success, of: %i[success failure pending]) do
+      on(:success) { "Operation succeeded" }
+      on(:failure) { "Operation failed" }
+      on(:pending) { "Operation pending" }
     end
+
+    expect(result).to eq("Operation succeeded")
+  end
+
+  it "raises error for multiple invalid cases" do
+    expect do
+      exhaustive_case("A", of: %w[A B C]) do
+        on("A") { "handled A" }
+        on("D", "E") { "handled D or E" } # Both D and E are not in the 'of' list
+      end
+    end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D", "E"/)
   end
 end
