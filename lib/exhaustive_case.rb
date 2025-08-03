@@ -35,6 +35,9 @@ module ExhaustiveCase
   # implemented
   class MissingCaseError < Error; end
 
+  # Indicates that a case value was declared more than once
+  class DuplicateCaseError < Error; end
+
   def exhaustive_case(value, of: nil, &block)
     builder = CaseBuilder.new(value, of)
     builder.instance_eval(&block)

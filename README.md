@@ -269,6 +269,23 @@ end
 # => ExhaustiveCase::MissingCaseError: Missing cases for: [:inactive, :pending]
 ```
 
+### `DuplicateCaseError`
+Raised when the same case value is declared more than once:
+```ruby
+exhaustive_case status do
+  on(:active) { "first active" }
+  on(:active) { "second active" }  # Duplicate case
+end
+# => ExhaustiveCase::DuplicateCaseError: Duplicate case(s): :active. Each case value can only be declared once.
+
+# Also applies when values appear across multiple on clauses
+exhaustive_case status do
+  on(:active, :pending) { "first group" }
+  on(:pending, :inactive) { "second group" }  # :pending is duplicated
+end
+# => ExhaustiveCase::DuplicateCaseError: Duplicate case(s): :pending. Each case value can only be declared once.
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ajsharma/exhaustive_case.
