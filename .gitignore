@@ -1,0 +1,102 @@
+# Ignored things include:
+# - Gem artifacts - Built gems, packages, temporary files
+# - Documentation - YARD docs, RDoc output
+# - Dependencies - Bundler cache, vendor directory
+# - Testing - RSpec status, coverage reports
+# - Development tools - IDE files, editor configs, debugging files
+# - OS files - macOS, Windows, Linux system files
+# - Logs and runtime - Application logs, PID files
+
+# Gem build artifacts
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Documentation cache and generated files
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+
+# Environment and configuration files
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# RSpec
+.rspec_status
+
+# SimpleCov
+/coverage
+
+# Byebug
+.byebug_history
+
+# RubyMine
+.idea
+
+# Vim
+*.swp
+*.swo
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Log files
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history

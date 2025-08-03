@@ -1,0 +1,31 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+
+plugins:
+  - rubocop-rspec
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Layout/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+# Disable RSpec/ExampleLength - allow longer test examples for clarity
+RSpec/ExampleLength:
+  Enabled: false
