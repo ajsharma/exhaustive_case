@@ -1,7 +1,7 @@
 # Exclusive Case
 
-[![Gem Version](https://badge.fury.io/rb/exclusive_case.svg)](https://badge.fury.io/rb/exclusive_case)
-[![CI](https://github.com/ajsharma/exclusive_case/actions/workflows/ci.yml/badge.svg)](https://github.com/ajsharma/exclusive_case/actions/workflows/ci.yml)
+[![Gem Version](https://badge.fury.io/rb/exhaustive_case.svg)](https://badge.fury.io/rb/exhaustive_case)
+[![CI](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml/badge.svg)](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml)
 
 Exhaustive case statements for Ruby to prevent bugs from unhandled cases when new values are added to a system.
 
@@ -10,7 +10,7 @@ Exhaustive case statements for Ruby to prevent bugs from unhandled cases when ne
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'exclusive_case'
+gem 'exhaustive_case'
 ```
 
 And then execute:
@@ -22,7 +22,7 @@ $ bundle install
 Or install it yourself as:
 
 ```bash
-$ gem install exclusive_case
+$ gem install exhaustive_case
 ```
 
 ## Usage
@@ -30,8 +30,8 @@ $ gem install exclusive_case
 Include the module to get access to the `exhaustive_case` method:
 
 ```ruby
-require 'exclusive_case'
-include ExclusiveCase
+require 'exhaustive_case'
+include ExhaustiveCase
 
 # Now you can use exhaustive_case
 result = exhaustive_case user_status do
@@ -44,10 +44,10 @@ end
 or to avoid globally adding the module, it can be included in a class:
 
 ```ruby
-require 'exclusive_case'
+require 'exhaustive_case'
 
 class UserRenderer
-  include ExclusiveCase
+  include ExhaustiveCase
 
   def handle_status(user_status)
     # Now you can use exhaustive_case
@@ -214,7 +214,7 @@ The following are the expected errors when using the gem:
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/ajsharma/exclusive_case.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ajsharma/exhaustive_case.
 
 ## License
 

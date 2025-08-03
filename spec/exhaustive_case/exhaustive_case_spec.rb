@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe ExclusiveCase do
+RSpec.describe ExhaustiveCase do
   include described_class
 
   describe "#exhaustive_case" do
@@ -28,7 +28,7 @@ RSpec.describe ExclusiveCase do
           on("A") { "handled A" }
           on("B") { "handled B" }
         end
-      end.to raise_error(ExclusiveCase::UnhandledCaseError, 'No case handled value: "D"')
+      end.to raise_error(ExhaustiveCase::UnhandledCaseError, 'No case handled value: "D"')
     end
 
     it "returns the result of the matched block" do
@@ -66,7 +66,7 @@ RSpec.describe ExclusiveCase do
             on("A") { "handled A" }
             on("D") { "handled D" } # D is not in the 'of' list
           end
-        end.to raise_error(ExclusiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
+        end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D"/)
       end
 
       it "raises MissingCaseError when not all 'of' values are handled" do
@@ -76,7 +76,7 @@ RSpec.describe ExclusiveCase do
             on("B") { "handled B" }
             # Missing case for "C"
           end
-        end.to raise_error(ExclusiveCase::MissingCaseError, /Missing case\(s\): "C"/)
+        end.to raise_error(ExhaustiveCase::MissingCaseError, /Missing case\(s\): "C"/)
       end
 
       it "allows multiple values in a single 'on' clause when using 'of'" do
@@ -104,7 +104,7 @@ RSpec.describe ExclusiveCase do
             on("A") { "handled A" }
             on("D", "E") { "handled D or E" } # Both D and E are not in the 'of' list
           end
-        end.to raise_error(ExclusiveCase::InvalidCaseError, /Invalid case\(s\): "D", "E"/)
+        end.to raise_error(ExhaustiveCase::InvalidCaseError, /Invalid case\(s\): "D", "E"/)
       end
     end
   end
