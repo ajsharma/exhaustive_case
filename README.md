@@ -1,9 +1,36 @@
 # Exclusive Case
 
+Exhaustive case statements for Ruby to prevent bugs from unhandled cases when enumerated values are added to or removed a system.
+
 [![Gem Version](https://badge.fury.io/rb/exhaustive_case.svg)](https://badge.fury.io/rb/exhaustive_case)
 [![CI](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml/badge.svg)](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml)
 
-Exhaustive case statements for Ruby to prevent bugs from unhandled cases when new values are added to a system.
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Usage](#usage)
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
+- [Enhanced Validation with `of:` Parameter](#enhanced-validation-with-of-parameter)
+- [Error Handling](#error-handling)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Quick Start
+
+```ruby
+require 'exhaustive_case'
+include ExhaustiveCase
+
+# Simple exhaustive case - will raise error if user_status doesn't match any case
+result = exhaustive_case user_status do
+  on(:active) { "User is active" }
+  on(:inactive) { "User is inactive" }
+  on(:pending) { "User is pending approval" }
+end
+```
 
 ## Installation
 
@@ -24,6 +51,10 @@ Or install it yourself as:
 ```bash
 $ gem install exhaustive_case
 ```
+
+## Requirements
+
+- Ruby 2.7 or higher
 
 ## Usage
 
@@ -60,7 +91,7 @@ class UserRenderer
 end
 ```
 
-## The problem
+## The Problem
 
 If/else statements can easily lead to mistake flows when introducing new cases across the systems.
 
@@ -68,11 +99,11 @@ For instance, with a constant set of inputs `['A', 'B', 'C']`:
 
 ```ruby
 if letter == 'A'
-  // handle a
+  # handle a
 elsif letter == 'B'
-  // handle b
-else // implicit c
-  // handle c 
+  # handle b
+else # implicit c
+  # handle c 
 end
 ```
 
@@ -80,11 +111,11 @@ However, if a new entry `D` is introduced to the system, now:
 
 ```ruby
 if letter == 'A'
-  // code to handle a (whoops!)
+  # code to handle a (whoops!)
 elsif letter == 'B'
-  // code to handle b (whoops!)
-else // implicit c and d
-  // code to handle c  (whoops!)
+  # code to handle b (whoops!)
+else # implicit c and d
+  # code to handle c  (whoops!)
 end
 ```
 
@@ -94,11 +125,11 @@ We can address this with a more explicit initial switch:
 
 ```ruby
 if letter == 'A'
-  // handle a
+  # handle a
 elsif letter == 'B'
-  // handle b
+  # handle b
 elsif letter == 'C'
-  // handle c
+  # handle c
 else 
   raise "Unknown letter #{letter}"
 end
@@ -111,11 +142,11 @@ Note: for these examples, we're using an if/elsif/else chain, but the same conce
 ```ruby
 case letter
 when 'A'
-  // handle a
+  # handle a
 when 'B'
-  // handle b
+  # handle b
 when 'C'
-  // handle c
+  # handle c
 else 
   raise "Unknown letter #{letter}"
 end
@@ -126,7 +157,7 @@ This new syntax is better, but leaves some gaps:
 1. Engineers taught to use the class `if/else` structure constantly introduce these problems.
 2. The final raise statement is often "impossible" to access via testing, it's nature preventing access without mocking (especially when these types of clauses are part of private functions).
 
-## The solution
+## The Solution
 
 But what if had a new type of case statement that could both ensure that all cases are correctly implemented and provide feedback if a new case has been introduced but not implemented?
 
@@ -134,9 +165,9 @@ Enter exhaustive case:
 
 ```ruby
 exhaustive_case letter do 
-  on('A') { // handle A }
-  on('B') { // handle B }
-  on('C') { // handle C }
+  on('A') { # handle A }
+  on('B') { # handle B }
+  on('C') { # handle C }
 end
 ```
 
@@ -147,8 +178,8 @@ with the new syntax, `exhaustive_case` handles the final else statement and rais
 
 ```ruby
 exhaustive_case letter do 
-  on('A') { // handle A }
-  on('B', 'C') { // handle B or C }
+  on('A') { # handle A }
+  on('B', 'C') { # handle B or C }
 end
 ```
 
@@ -168,9 +199,9 @@ For even stronger guarantees, you can specify the complete list of acceptable in
 VALID_LETTERS = ['A', 'B', 'C'].freeze
 
 exhaustive_case letter, of: VALID_LETTERS do 
-  on('A') { // handle A }
-  on('B') { // handle B }
-  on('C') { // handle C }
+  on('A') { # handle A }
+  on('B') { # handle B }
+  on('C') { # handle C }
 end
 ```
 
@@ -208,9 +239,35 @@ if a new status is added to `STATUSES` a test suite should reveal that a case is
 
 The following are the expected errors when using the gem:
 
-- **`UnhandledCaseError`** - Raised when the input value doesn't match any `on` clause
-- **`InvalidCaseError`** - Raised when using `of:` and an `on` clause contains a value not in the allowed list
-- **`MissingCaseError`** - Raised when using `of:` and not all allowed values have corresponding `on` clauses
+### `UnhandledCaseError`
+Raised when the input value doesn't match any `on` clause:
+```ruby
+exhaustive_case :unknown_status do
+  on(:active) { "active" }
+  on(:inactive) { "inactive" }
+end
+# => ExhaustiveCase::UnhandledCaseError: No case matched for value: :unknown_status
+```
+
+### `InvalidCaseError` 
+Raised when using `of:` and an `on` clause contains a value not in the allowed list:
+```ruby
+exhaustive_case status, of: [:active, :inactive] do
+  on(:active) { "active" }
+  on(:pending) { "pending" }  # :pending not in allowed list
+end
+# => ExhaustiveCase::InvalidCaseError: Case :pending is not in the allowed list: [:active, :inactive]
+```
+
+### `MissingCaseError`
+Raised when using `of:` and not all allowed values have corresponding `on` clauses:
+```ruby
+exhaustive_case status, of: [:active, :inactive, :pending] do
+  on(:active) { "active" }
+  # Missing :inactive and :pending cases
+end
+# => ExhaustiveCase::MissingCaseError: Missing cases for: [:inactive, :pending]
+```
 
 ## Contributing
 
