@@ -41,6 +41,25 @@ result = exhaustive_case user_status do
 end
 ```
 
+or to avoid globally adding the module, it can be included in a class:
+
+```ruby
+require 'exclusive_case'
+
+class UserRenderer
+  include ExclusiveCase
+
+  def handle_status(user_status)
+    # Now you can use exhaustive_case
+    result = exhaustive_case user_status do
+      on(:active) { "User is active" }
+      on(:inactive) { "User is inactive" }
+      on(:pending) { "User is pending approval" }
+    end
+  end
+end
+```
+
 ## The problem
 
 If/else statements can easily lead to mistake flows when introducing new cases across the systems.
