@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-08-03
+
+### Added
+- `DuplicateCaseError` - raised when the same case value is declared more than once
+- Duplicate case detection prevents declaring the same value across multiple `on` clauses
+- Comprehensive test coverage for duplicate case scenarios
+- Documentation for `DuplicateCaseError` in README with examples
+
+### Technical
+- Enhanced case validation with duplicate detection logic
+- Maintained 100% test coverage with new duplicate case test suite
+
 ## [1.0.0] - 2025-08-02
 
 ### Added
@@ -37,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RuboCop linting configuration
 - Development scripts (`bin/setup`, `bin/console`)
 
-[Unreleased]: https://github.com/yourusername/exhaustive_case/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/yourusername/exhaustive_case/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/yourusername/exhaustive_case/releases/tag/v1.0.1
 [1.0.0]: https://github.com/yourusername/exhaustive_case/releases/tag/v1.0.0
 [0.1.0]: https://github.com/yourusername/exhaustive_case/releases/tag/v0.1.0
