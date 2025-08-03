@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "exclusive_case/version"
-require_relative "exclusive_case/case_builder"
+require_relative "exhaustive_case/version"
+require_relative "exhaustive_case/case_builder"
 
-# ExclusiveCase provides exhaustive case statement functionality to prevent bugs
+# ExhaustiveCase provides exhaustive case statement functionality to prevent bugs
 # from unhandled cases when new values are added to a system.
 #
 # @example Basic usage
@@ -19,7 +19,7 @@ require_relative "exclusive_case/case_builder"
 #     on('B') { "handle B" }
 #     on('C') { "handle C" }
 #   end
-module ExclusiveCase
+module ExhaustiveCase
   # Generic Error class for the gem
   class Error < StandardError; end
 

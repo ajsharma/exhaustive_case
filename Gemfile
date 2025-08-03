@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in exclusive_case.gemspec
+# Specify your gem's dependencies in exhaustive_case.gemspec
 gemspec
 
 group :test, :development do

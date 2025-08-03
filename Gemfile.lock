@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    exclusive_case (1.0.0)
+    exhaustive_case (1.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -68,7 +68,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  exclusive_case!
+  exhaustive_case!
   rake
   rspec
   rubocop

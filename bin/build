@@ -2,4 +2,4 @@
 
 # Build gem in preparation for publishing to rubygems
 
-gem build exclusive_case.gemspec
+gem build exhaustive_case.gemspec
