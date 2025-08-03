@@ -1,5 +1,46 @@
 # Exclusive Case
 
+[![Gem Version](https://badge.fury.io/rb/exclusive_case.svg)](https://badge.fury.io/rb/exclusive_case)
+[![CI](https://github.com/ajsharma/exclusive_case/actions/workflows/ci.yml/badge.svg)](https://github.com/ajsharma/exclusive_case/actions/workflows/ci.yml)
+
+Exhaustive case statements for Ruby to prevent bugs from unhandled cases when new values are added to a system.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'exclusive_case'
+```
+
+And then execute:
+
+```bash
+$ bundle install
+```
+
+Or install it yourself as:
+
+```bash
+$ gem install exclusive_case
+```
+
+## Usage
+
+Include the module to get access to the `exhaustive_case` method:
+
+```ruby
+require 'exclusive_case'
+include ExclusiveCase
+
+# Now you can use exhaustive_case
+result = exhaustive_case user_status do
+  on(:active) { "User is active" }
+  on(:inactive) { "User is inactive" }
+  on(:pending) { "User is pending approval" }
+end
+```
+
 ## The problem
 
 If/else statements can easily lead to mistake flows when introducing new cases across the systems.
@@ -143,3 +184,19 @@ end
 ```
 
 if a new status is added to `STATUSES` a test suite should reveal that a case is missing.
+
+## Error Handling
+
+The following are the expected errors when using the gem:
+
+- **`UnhandledCaseError`** - Raised when the input value doesn't match any `on` clause
+- **`InvalidCaseError`** - Raised when using `of:` and an `on` clause contains a value not in the allowed list
+- **`MissingCaseError`** - Raised when using `of:` and not all allowed values have corresponding `on` clauses
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/ajsharma/exclusive_case.
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

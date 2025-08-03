@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Build gem in preparation for publishing to rubygems
+
+gem build exclusive_case.gemspec

@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2025-08-02
+
+### Added
+- **BREAKING**: Optional `of:` parameter for enhanced validation
+- `InvalidCaseError` - raised when cases are not in the allowed `of:` list
+- `MissingCaseError` - raised when not all `of:` values are handled
+- Comprehensive validation ensuring all cases belong to specified list
+- Requirement that all `of:` values must have corresponding cases
+- Full backward compatibility when `of:` parameter is not used
+
+### Changed
+- **BREAKING**: `exhaustive_case` signature now accepts optional `of:` parameter
+
+### Technical
+- 100% test coverage maintained
+- Full RuboCop compliance with comprehensive documentation
+- GitHub Actions CI/CD pipeline with multi-Ruby version testing
+- Automated dependency management via Dependabot
+
 ## [0.1.0] - 2025-08-02
 
 ### Added
@@ -18,5 +37,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RuboCop linting configuration
 - Development scripts (`bin/setup`, `bin/console`)
 
-[Unreleased]: https://github.com/yourusername/exclusive_case/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/yourusername/exclusive_case/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/yourusername/exclusive_case/releases/tag/v1.0.0
 [0.1.0]: https://github.com/yourusername/exclusive_case/releases/tag/v0.1.0

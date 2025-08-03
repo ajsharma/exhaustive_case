@@ -11,14 +11,14 @@ Gem::Specification.new do |spec|
   spec.summary = "Exhaustive case statements for Ruby to prevent unhandled cases"
   spec.description =  "A Ruby gem that provides exhaustive case statement functionality to prevent bugs " \
                       "from unhandled cases when new values are added to a system."
-  spec.homepage = "https://github.com/yourusername/exclusive_case"
+  spec.homepage = "https://github.com/ajsharma/exclusive_case"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/yourusername/exclusive_case"
-  spec.metadata["changelog_uri"] = "https://github.com/yourusername/exclusive_case/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/ajsharma/exclusive_case"
+  spec.metadata["changelog_uri"] = "https://github.com/ajsharma/exclusive_case/blob/main/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
