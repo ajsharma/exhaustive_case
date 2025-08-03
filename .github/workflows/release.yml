@@ -29,7 +29,7 @@ jobs:
       run: gem build exhaustive_case.gemspec
 
     - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: exhaustive_case-*.gem
         generate_release_notes: true
