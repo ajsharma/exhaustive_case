@@ -1,9 +1,10 @@
 # Exclusive Case
 
+Exhaustive case statements for Ruby to prevent bugs from unhandled cases when enumerated values are added to or removed a system.
+
 [![Gem Version](https://badge.fury.io/rb/exhaustive_case.svg)](https://badge.fury.io/rb/exhaustive_case)
 [![CI](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml/badge.svg)](https://github.com/ajsharma/exhaustive_case/actions/workflows/ci.yml)
 
-Exhaustive case statements for Ruby to prevent bugs from unhandled cases when new values are added to a system.
 
 ## Table of Contents
 
@@ -90,7 +91,7 @@ class UserRenderer
 end
 ```
 
-## The problem
+## The Problem
 
 If/else statements can easily lead to mistake flows when introducing new cases across the systems.
 
@@ -156,7 +157,7 @@ This new syntax is better, but leaves some gaps:
 1. Engineers taught to use the class `if/else` structure constantly introduce these problems.
 2. The final raise statement is often "impossible" to access via testing, it's nature preventing access without mocking (especially when these types of clauses are part of private functions).
 
-## The solution
+## The Solution
 
 But what if had a new type of case statement that could both ensure that all cases are correctly implemented and provide feedback if a new case has been introduced but not implemented?
 
